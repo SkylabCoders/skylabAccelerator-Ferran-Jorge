@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import axios from 'axios';
 import actionTypes from './actionsTypes';
 
@@ -39,9 +40,11 @@ export function deleteProjectSuccess(deletedProject) {
 }
 
 export function loadProjectList() {
+  debugger;
+  const projectListEndpoint = 'projects';
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(apiURL);
+      const { data } = await axios.get(`${apiURL}${projectListEndpoint}`);
       dispatch(loadProjectListSuccess(data));
     } catch (error) {
       dispatch(handleError(error));
@@ -79,5 +82,13 @@ export function deleteProject(projectToDelete) {
     } catch (error) {
       dispatch(handleError(error));
     }
+  };
+}
+
+export function getProjectDetail(_id) {
+  debugger;
+  return {
+    type: actionTypes.GET_PROJECT_DETAIL,
+    _id,
   };
 }
