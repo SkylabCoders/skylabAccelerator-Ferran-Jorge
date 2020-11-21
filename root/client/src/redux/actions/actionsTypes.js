@@ -1,0 +1,6 @@
+const actionTypes = {
+  LOAD_PROJECTS_LIST: 'LOAD_PROJECTS_LIST',
+  ERROR_LOADING_PROJECT_LIST: 'ERROR_LOADING_PROJECT_LIST',
+};
+
+export default actionTypes;
