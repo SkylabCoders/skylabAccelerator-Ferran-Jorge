@@ -13,16 +13,6 @@ describe('proyectsReducer', () => {
     };
   });
 
-  // afterEach(() => {
-  //   initialState = {
-  //     projectList: [],
-  //     createdProject: [],
-  //     updatedProject: [],
-  //     deletedProject: [],
-  //     error: [],
-  //   };
-  // });
-
   test('should return the initial state', () => {
     expect(projectsReducer(undefined, {})).toEqual({
       projectsReducer: {
