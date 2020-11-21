@@ -70,7 +70,7 @@ describe('projectsController', () => {
 
     const req = { body: { _id: '1', description: 'Skylab mola molt!' } };
 
-    Projects.findByIdAndUpdate = jest.fn().mockImplementationOnce((query, body, callback) => {
+    Projects.findOneAndUpdate = jest.fn().mockImplementationOnce((id, body, options, callback) => {
       callback(false, 'Deleted Successfully!');
     });
 
@@ -86,7 +86,7 @@ describe('projectsController', () => {
 
     const req = { body: { _id: '1', description: 'Skylab mola molt!' } };
 
-    Projects.findByIdAndUpdate = jest.fn().mockImplementationOnce((query, body, callback) => {
+    Projects.findOneAndUpdate = jest.fn().mockImplementationOnce((id, body, options, callback) => {
       callback(true, 'errorDeleteProject');
     });
 
@@ -101,7 +101,7 @@ describe('projectsController', () => {
 
     const req = { body: { _id: '1' } };
 
-    Projects.findByIdAndRemove = jest.fn().mockImplementationOnce((query, callback) => {
+    Projects.findOneAndRemove = jest.fn().mockImplementationOnce((query, callback) => {
       callback(false, 'Deleted Successfully!');
     });
 
@@ -117,7 +117,7 @@ describe('projectsController', () => {
 
     const req = { body: { _id: '1' } };
 
-    Projects.findByIdAndRemove = jest.fn().mockImplementationOnce((query, callback) => {
+    Projects.findOneAndRemove = jest.fn().mockImplementationOnce((query, callback) => {
       callback(true, 'errorDeleteProject');
     });
 
