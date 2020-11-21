@@ -5,7 +5,9 @@ const { connect } = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const Projects = require('./src/models/projectsModel');
+const Collaborators = require('./src/models/collaboratorsModel');
 const projectsRouter = require('./src/routes/projectsRouter')(Projects);
+const collaboratorsRouter = require('./src/routes/collaboratorsRouter')(Collaborators);
 
 const app = express();
 app.use(cors());
@@ -18,5 +20,6 @@ app.use(bodyParser.json());
 connect(dataBaseURL, { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.use('/projects', projectsRouter);
+app.use('/collaborators', collaboratorsRouter);
 
 app.listen(port, () => (`Server is running on port ${chalk.blue(port)}`));
