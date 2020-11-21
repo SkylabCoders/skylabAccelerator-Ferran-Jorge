@@ -1,14 +1,19 @@
 const Projects = require('../models/projectsModel');
+const Collaborators = require('../models/collaboratorsModel');
 const projectsController = require('./projectsController')(Projects);
+
+jest.mock('../models/collaboratorsModel');
+jest.mock('../models/projectsModel');
 
 describe('projectsController', () => {
   test('should call response json on getMethod', () => {
     const res = {
       json: jest.fn(),
     };
-
-    Projects.find = jest.fn().mockImplementationOnce((query, callback) => {
-      callback(false, 'ProjectsList');
+    Projects.find = jest.fn().mockReturnValue({
+      populate: jest.fn().mockReturnValue({
+        exec: jest.fn().mockImplementationOnce((callback) => { callback(false, 'ProjectsList'); }),
+      }),
     });
 
     projectsController.getMethod({}, res);
@@ -20,9 +25,10 @@ describe('projectsController', () => {
     const res = {
       send: jest.fn(),
     };
-
-    Projects.find = jest.fn().mockImplementationOnce((query, callback) => {
-      callback(true, 'errorFindProjects');
+    Projects.find = jest.fn().mockReturnValue({
+      populate: jest.fn().mockReturnValue({
+        exec: jest.fn().mockImplementationOnce((callback) => { callback(true, 'errorFindProjects'); }),
+      }),
     });
 
     projectsController.getMethod({}, res);
@@ -30,48 +36,34 @@ describe('projectsController', () => {
     expect(res.send).toHaveBeenCalled();
   });
 
-  test('should call response json on postMethod', () => {
-    const req = {
-      body: { description: 'Skylab mola!' },
-    };
-    const res = {
-      json: jest.fn(),
-    };
+  test('Post method - Projects - should have been called', () => {
+    const req = { body: { project: { _id: '1', collaborators: 'Skylab' }, addCollaborator: { name: 'Coders' } } };
+    Projects.create = jest.fn();
+    Collaborators.create = jest.fn();
 
-    Projects.create = jest.fn().mockImplementationOnce((query, callback) => {
-      callback(false, 'newProject');
-    });
+    projectsController.postMethod(req);
 
-    projectsController.postMethod(req, res);
-
-    expect(res.json).toHaveBeenCalled();
+    expect(Projects.create).toHaveBeenCalled();
   });
 
-  test('should call error on postMethod', () => {
-    const req = {
-      body: { description: 'Skylab mola!' },
-    };
-    const res = {
-      send: jest.fn(),
-    };
+  test('Post method - Collaborators - should have been called', () => {
+    const req = { body: { project: { _id: '1', collaborators: 'Skylab' }, addCollaborator: { name: 'Coders' } } };
+    Collaborators.create = jest.fn();
+    Projects.create = jest.fn().mockImplementationOnce({});
 
-    Projects.create = jest.fn().mockImplementationOnce((query, callback) => {
-      callback(true, 'errorAddProject');
-    });
+    projectsController.postMethod(req);
 
-    projectsController.postMethod(req, res);
-
-    expect(res.send).toHaveBeenCalled();
+    expect(Projects.create).toHaveBeenCalled();
   });
   test('should call response json on putMethod', () => {
     const res = {
       json: jest.fn(),
     };
 
-    const req = { body: { _id: '1', description: 'Skylab mola molt!' } };
+    const req = { body: { project: { _id: '1', description: 'Skylab mola molt!' } } };
 
     Projects.findOneAndUpdate = jest.fn().mockImplementationOnce((id, body, options, callback) => {
-      callback(false, 'Deleted Successfully!');
+      callback(false, 'projectUpdated');
     });
 
     projectsController.putMethod(req, res);
@@ -84,10 +76,10 @@ describe('projectsController', () => {
       send: jest.fn(),
     };
 
-    const req = { body: { _id: '1', description: 'Skylab mola molt!' } };
+    const req = { body: { project: { _id: '1', description: 'Skylab mola molt!' } } };
 
     Projects.findOneAndUpdate = jest.fn().mockImplementationOnce((id, body, options, callback) => {
-      callback(true, 'errorDeleteProject');
+      callback(true, 'errorUpdatingProject');
     });
 
     projectsController.putMethod(req, res);
