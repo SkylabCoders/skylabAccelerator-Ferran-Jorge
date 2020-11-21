@@ -1,20 +1,22 @@
 /* eslint-disable no-underscore-dangle */
-function projectsController(projects) {
+function projectsController(Projects) {
   function getMethod(req, res) {
-    projects.find({}, (errorFindList, projectsList) => (errorFindList
+    Projects.find({}, (errorFindList, projectsList) => (errorFindList
       ? res.send(errorFindList)
       : res.json(projectsList)));
   }
 
   function postMethod(req, res) {
     const { body } = req;
-    projects.create(body, (errorAddNewProject, newprojects) => (errorAddNewProject
-      ? res.send(errorAddNewProject)
-      : res.json(newprojects)));
+    Projects.create({ ...body, created_at: new Date().toDateString() },
+      (errorAddNewProject, newprojects) => (errorAddNewProject
+        ? res.send(errorAddNewProject)
+        : res.json(newprojects)));
   }
+
   function putMethod(req, res) {
-    const { body } = req;
-    projects.findByIdAndUpdate(body._id, body,
+    const { body: { _id }, body } = req;
+    Projects.findOneAndUpdate(_id, body, { upsert: true, new: true },
       (errorUpdateProject, projectsList) => (errorUpdateProject
         ? res.send(errorUpdateProject)
         : res.json(projectsList)));
@@ -22,7 +24,7 @@ function projectsController(projects) {
 
   function deleteMethod(req, res) {
     const { body } = req;
-    projects.findByIdAndRemove(body, (errorDeleteProject) => (errorDeleteProject
+    Projects.findOneAndRemove(body, (errorDeleteProject) => (errorDeleteProject
       ? res.send(errorDeleteProject)
       : res.json('Deleted Successfully!')));
   }
