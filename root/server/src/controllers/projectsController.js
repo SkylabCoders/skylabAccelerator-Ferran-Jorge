@@ -1,30 +1,43 @@
+const Collaborators = require('../models/collaboratorsModel');
 /* eslint-disable no-underscore-dangle */
 function projectsController(Projects) {
   function getMethod(req, res) {
-    Projects.find({}, (errorFindList, projectsList) => (errorFindList
-      ? res.send(errorFindList)
-      : res.json(projectsList)));
+    Projects.find({})
+      .populate({ path: 'collaborators' })
+      .exec((errorFindList, projectsList) => (errorFindList
+        ? res.send(errorFindList)
+        : res.json(projectsList)));
   }
 
-  function postMethod(req, res) {
-    const { body } = req;
-    Projects.create({ ...body, created_at: new Date().toDateString() },
-      (errorAddNewProject, newprojects) => (errorAddNewProject
-        ? res.send(errorAddNewProject)
-        : res.json(newprojects)));
+  async function postMethod(req, res) {
+    const { project: { collaborators, ...projectInfo } } = req.body;
+
+    try {
+      const collaboratorsResponse = await Collaborators.create(collaborators);
+      const projectsResponse = await Projects.create(
+        {
+          ...projectInfo,
+          created_at: new Date().toDateString(),
+          collaborators: collaboratorsResponse.map((collaborator) => collaborator._id),
+        },
+      );
+      res.json(projectsResponse);
+    } catch (error) {
+      res.send(error);
+    }
   }
 
   function putMethod(req, res) {
-    const { body: { _id }, body } = req;
-    Projects.findOneAndUpdate(_id, body, { upsert: true, new: true },
+    const { project: { _id }, project } = req.body;
+    Projects.findOneAndUpdate(_id, project, { upsert: true, new: true },
       (errorUpdateProject, projectsList) => (errorUpdateProject
         ? res.send(errorUpdateProject)
         : res.json(projectsList)));
   }
 
   function deleteMethod(req, res) {
-    const { body } = req;
-    Projects.findOneAndRemove(body, (errorDeleteProject) => (errorDeleteProject
+    const { project } = req.body;
+    Projects.findOneAndRemove(project, (errorDeleteProject) => (errorDeleteProject
       ? res.send(errorDeleteProject)
       : res.json('Deleted Successfully!')));
   }
