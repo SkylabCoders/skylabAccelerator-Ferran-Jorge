@@ -1,4 +1,3 @@
-/* eslint-disable no-debugger */
 import React, { useEffect } from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
@@ -65,7 +64,7 @@ function ProjectDetail({ projectDetail, dispatch }) {
             <button
               type="button"
               onClick={() => {
-                dispatch(deleteProject({ project: projectDetail }));
+                dispatch(deleteProject(projectDetail._id));
               }}
             >
               Eliminar proyecto
