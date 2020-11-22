@@ -10,5 +10,19 @@
 
 body {
   font-family: 'Roboto', sans-serif;
+  background: bgPrimaryColor;
+  color: black;
+}
+
+li {
+  list-style: none;
+}
+
+a:link,
+a:visited,
+a:hover,
+a:active {
+  text-decoration: none;
+  color: #0366D6;
 }
 /*# sourceMappingURL=style.css.map */

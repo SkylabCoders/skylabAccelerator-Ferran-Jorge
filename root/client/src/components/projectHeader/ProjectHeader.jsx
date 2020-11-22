@@ -25,11 +25,15 @@ function ProjectHeader({ login, dispatch }) {
 }
 
 ProjectHeader.propTypes = {
-  login: PropTypes.shape([]).isRequired,
+  login: PropTypes.arrayOf,
   dispatch: PropTypes.func.isRequired,
   actions: PropTypes.shape({
     getToken: PropTypes.func.isRequired,
   }).isRequired,
+};
+
+ProjectHeader.defaultProps = {
+  login: [],
 };
 
 function mapStateToProps({ projectsReducer }) {
