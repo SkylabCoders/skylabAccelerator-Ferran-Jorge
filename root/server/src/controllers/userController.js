@@ -25,8 +25,7 @@ function userController() {
     const { code } = req.body;
     try {
       const { data } = await axios.post(`${accessURL}${code}`);
-      const token = data.split('&')[0].split('=')[1];
-      res.json(token);
+      res.json(data.split('&')[0].split('=')[1]);
     } catch (error) {
       res.send(error);
     }
