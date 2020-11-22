@@ -61,7 +61,6 @@ export function createProject(projectInfo) {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(`${apiURL}${projectsEndpoint}`, { ...projectInfo });
-      console.log();
       dispatch(createProjectSuccess(data));
     } catch (error) {
       dispatch(handleError(error));
@@ -69,11 +68,11 @@ export function createProject(projectInfo) {
   };
 }
 
-export function updateProject(projectToUpdate) {
+export function updateProject(updatedProject) {
   return async (dispatch) => {
     try {
-      const demo = await axios.put(`${apiURL}${projectsEndpoint}`, { projectToUpdate });
-      dispatch(updateProjectSuccess(demo));
+      const { data } = await axios.put(`${apiURL}${projectsEndpoint}`, { ...updatedProject });
+      dispatch(updateProjectSuccess(data));
     } catch (error) {
       dispatch(handleError(error));
     }
@@ -83,8 +82,8 @@ export function updateProject(projectToUpdate) {
 export function deleteProject(projectToDelete) {
   return async (dispatch) => {
     try {
-      const { data } = await axios.delete(`${apiURL}${projectsEndpoint}`);
-      dispatch(deleteProjectSuccess(data), { ...projectToDelete });
+      const { data } = await axios.delete(`${apiURL}${projectsEndpoint}`, { projectToDelete });
+      dispatch(deleteProjectSuccess(data));
     } catch (error) {
       dispatch(handleError(error));
     }
@@ -128,7 +127,6 @@ export function getToken(code) {
       });
       debugger;
       const token = data.split('&')[0].replace('access_token=');
-      console.log(token);
       dispatch(getUser(token));
     } catch (error) {
       dispatch(handleError(error));

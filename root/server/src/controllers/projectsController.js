@@ -28,15 +28,15 @@ function projectsController(Projects) {
 
   function putMethod(req, res) {
     const { project: { _id }, project } = req.body;
-    Projects.findOneAndUpdate(_id, project, { upsert: true, new: true },
-      (errorUpdateProject, projectsList) => (errorUpdateProject
+    Projects.findByIdAndUpdate(_id, project, { upsert: true, new: true },
+      (errorUpdateProject, updatedProject) => (errorUpdateProject
         ? res.send(errorUpdateProject)
-        : res.json(projectsList)));
+        : res.json(updatedProject)));
   }
 
   function deleteMethod(req, res) {
-    const { project } = req.body;
-    Projects.findOneAndRemove(project,
+    const { _id } = req.body;
+    Projects.findOneAndRemove(_id,
       (errorDeleteProject, projectDeleted) => (errorDeleteProject
         ? res.send(errorDeleteProject)
         : res.json(projectDeleted._id)));

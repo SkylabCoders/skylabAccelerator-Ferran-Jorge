@@ -18,7 +18,7 @@ const dataBaseURL = 'mongodb+srv://jneira95:5o7harhz@cluster0.hykgh.mongodb.net/
 app.use(morgan('tiny'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-connect(dataBaseURL, { useNewUrlParser: true, useUnifiedTopology: true });
+connect(dataBaseURL, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 
 app.use('/projects', projectsRouter);
 app.use('/collaborators', collaboratorsRouter);
