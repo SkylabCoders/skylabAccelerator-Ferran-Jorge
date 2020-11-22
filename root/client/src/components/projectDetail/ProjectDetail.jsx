@@ -29,7 +29,7 @@ function ProjectDetail({ projectDetail, dispatch }) {
 
   return (
     <>
-      <section>
+      <section className="detail-container">
         {!_.isEmpty(projectInfo) && projectDetail._id === id && (
           <>
             <div>
@@ -91,7 +91,6 @@ ProjectDetail.propTypes = {
     created_at: PropTypes.string,
     githubRepo: PropTypes.string,
     _id: PropTypes.string,
-
   }),
   dispatch: PropTypes.func.isRequired,
 };
