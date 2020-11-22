@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import { createProject, updateProject } from '../../redux/actions/projectsActions';
 
 function CreateProjectForm({ projectDetail, dispatch }) {
+  debugger;
   const { id } = useParams();
   const [name, setName] = useState('');
   const [owner, setOwner] = useState('');
@@ -19,7 +20,7 @@ function CreateProjectForm({ projectDetail, dispatch }) {
       owner,
       description,
       language,
-      collaborators: projectDetail.collaborators,
+      collaborators: [{ name: 'Admin', login: '1234' }],
     },
   };
 
@@ -33,7 +34,18 @@ function CreateProjectForm({ projectDetail, dispatch }) {
   }, []);
 
   return (
-    <form>
+    <form onSubmit={() => (_.isEmpty(id)
+      ? dispatch(createProject(projectInfo))
+      : dispatch(updateProject({
+        project: {
+          _id: id,
+          name,
+          owner,
+          description,
+          language,
+        },
+      })))}
+    >
       <label htmlFor="name">
         Nombre
         <input
@@ -83,12 +95,7 @@ function CreateProjectForm({ projectDetail, dispatch }) {
           required
         />
       </label>
-      <input
-        type="submit"
-        onClick={() => (_.isEmpty(id)
-          ? dispatch(createProject(projectInfo))
-          : dispatch(updateProject({ _id: id, ...projectInfo })))}
-      />
+      <button type="submit">Guardar Cambios</button>
     </form>
   );
 }
@@ -99,12 +106,14 @@ CreateProjectForm.propTypes = {
     owner: PropTypes.string,
     description: PropTypes.string,
     language: PropTypes.string,
+    created_at: PropTypes.string,
     collaborators: PropTypes.arrayOf(String),
   }).isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
 function mapStateToProps({ projectsReducer }) {
+  debugger;
   return {
     projectDetail: projectsReducer.projectDetail,
   };

@@ -2,7 +2,11 @@ import axios from 'axios';
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
 import {
-  loadProjectList, createProject, updateProject, deleteProject,
+  loadProjectList,
+  createProject,
+  updateProject,
+  deleteProject,
+  getProjectDetail,
 } from '../actions/projectsActions';
 import actionTypes from '../actions/actionsTypes';
 
@@ -141,6 +145,18 @@ describe('Project Actions', () => {
       expect(store.getActions()).toEqual([{
         type: actionTypes.ERROR_HANDLER,
         error,
+      }]);
+    });
+  });
+  describe('deleteProject', () => {
+    test('should call to deleteProject if no error occurs', async () => {
+      const _id = 'string';
+
+      store.dispatch(getProjectDetail(_id));
+
+      expect(store.getActions()).toEqual([{
+        type: actionTypes.GET_PROJECT_DETAIL,
+        _id,
       }]);
     });
   });

@@ -28,7 +28,6 @@ export default function projectsReducer(state = initialState, action) {
       break;
     case actionTypes.CREATE_PROJECT:
       updateState = { ...state, createdProject };
-      debugger;
       break;
     case actionTypes.UPDATE_PROJECT:
       updateState = { ...state, updatedProject };

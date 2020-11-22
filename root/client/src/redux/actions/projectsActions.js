@@ -54,10 +54,9 @@ export function loadProjectList() {
 export function createProject(projectInfo) {
   return async (dispatch) => {
     try {
-      debugger;
       const { data } = await axios.post(`${apiURL}${projectsEndpoint}`, { ...projectInfo });
+      console.log();
       dispatch(createProjectSuccess(data));
-      debugger;
     } catch (error) {
       dispatch(handleError(error));
     }
@@ -67,8 +66,9 @@ export function createProject(projectInfo) {
 export function updateProject(projectToUpdate) {
   return async (dispatch) => {
     try {
-      const { data } = await axios.put(`${apiURL}${projectsEndpoint}`, { ...projectToUpdate });
-      dispatch(updateProjectSuccess(data));
+      const demo = await axios.put(`${apiURL}${projectsEndpoint}`, { projectToUpdate });
+      console.log(demo);
+      dispatch(updateProjectSuccess(demo));
     } catch (error) {
       dispatch(handleError(error));
     }
@@ -76,12 +76,10 @@ export function updateProject(projectToUpdate) {
 }
 
 export function deleteProject(projectToDelete) {
-  debugger;
   return async (dispatch) => {
     try {
       const { data } = await axios.delete(`${apiURL}${projectsEndpoint}`);
       dispatch(deleteProjectSuccess(data), { ...projectToDelete });
-      debugger;
     } catch (error) {
       dispatch(handleError(error));
     }
