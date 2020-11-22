@@ -1,5 +1,5 @@
 const Collaborators = require('../models/collaboratorsModel');
-/* eslint-disable no-underscore-dangle */
+
 function projectsController(Projects) {
   function getMethod(req, res) {
     Projects.find({})
@@ -27,7 +27,9 @@ function projectsController(Projects) {
   }
 
   function putMethod(req, res) {
-    const { project: { _id }, project } = req.body;
+    const { _id, project } = req.body;
+    console.log(req.body);
+    console.log(_id);
     Projects.findOneAndUpdate(_id, project, { upsert: true, new: true },
       (errorUpdateProject, projectsList) => (errorUpdateProject
         ? res.send(errorUpdateProject)

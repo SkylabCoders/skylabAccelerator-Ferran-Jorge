@@ -1,5 +1,6 @@
 const express = require('express');
 const chalk = require('chalk');
+const debug = require('debug')('app');
 const morgan = require('morgan');
 const { connect } = require('mongoose');
 const bodyParser = require('body-parser');
@@ -22,4 +23,5 @@ connect(dataBaseURL, { useNewUrlParser: true, useUnifiedTopology: true });
 app.use('/projects', projectsRouter);
 app.use('/collaborators', collaboratorsRouter);
 
-app.listen(port, () => (`Server is running on port ${chalk.blue(port)}`));
+app.listen(port, () => (
+  debug(`Server is running on port ${chalk.blue(port)}`)));

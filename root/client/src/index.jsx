@@ -21,6 +21,7 @@ ReactDOM.render(
         <Route path="/list" exact component={ProjectListComponent} />
         <Route path="/detail/:id" exact component={ProjectDetail} />
         <Route path="/form" exact component={CreateProjectForm} />
+        <Route path="/form/:id" exact component={CreateProjectForm} />
       </BrowserRouter>
     </ReduxProvider>
   </React.StrictMode>,
