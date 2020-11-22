@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import { nanoid } from 'nanoid';
+import './listStyles/listStyles.css';
 import { loadProjectList } from '../../redux/actions/projectsActions';
 import CreateProjectItemComponent from './CreateProjectListItemComponent';
 
@@ -14,9 +15,13 @@ function ProjectListComponent({ projectList, dispatch }) {
 
   return (
     <>
-      {projectList.length > 0 && projectList.map(
-        (projectInfo) => <CreateProjectItemComponent data={projectInfo} key={nanoid()} />,
-      )}
+      <section className="projects-wrapper">
+        <h2 className="projects-title">Here`s what we found based on your interests...</h2>
+        {projectList.length > 0 && projectList.map(
+          (projectInfo) => <CreateProjectItemComponent data={projectInfo} key={nanoid()} />,
+        )}
+      </section>
+
     </>
   );
 }
