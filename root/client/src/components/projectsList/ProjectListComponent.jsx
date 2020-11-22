@@ -17,7 +17,7 @@ function ProjectListComponent({ projectList, dispatch }) {
     <>
       <section className="projects-wrapper">
         <h2 className="projects-title">Here`s what we found based on your interests...</h2>
-        {projectList.length > 0 && projectList.map(
+        {projectList?.length > 0 && projectList.map(
           (projectInfo) => <CreateProjectItemComponent data={projectInfo} key={nanoid()} />,
         )}
       </section>
@@ -27,12 +27,8 @@ function ProjectListComponent({ projectList, dispatch }) {
 }
 
 ProjectListComponent.propTypes = {
-  projectList: PropTypes.arrayOf(PropTypes.objectOf),
+  projectList: PropTypes.arrayOf(PropTypes.objectOf).isRequired,
   dispatch: PropTypes.func.isRequired,
-};
-
-ProjectListComponent.defaultProps = {
-  projectList: [],
 };
 
 function mapStateToProps({ projectsReducer }) {

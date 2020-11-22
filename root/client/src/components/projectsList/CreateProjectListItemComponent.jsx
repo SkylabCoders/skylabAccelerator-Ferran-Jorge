@@ -1,10 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
 import './listStyles/listStyles.css';
 
 function
-CreateProjectItemComponen({ data }) {
+CreateProjectItemComponent({ data }) {
   return (
     <section className="project-article">
       <header className="article-header">
@@ -31,15 +32,14 @@ CreateProjectItemComponen({ data }) {
   );
 }
 
-CreateProjectItemComponen.propTypes = {
-  data: PropTypes.shape({
-    name: PropTypes.string,
-    owner: PropTypes.string,
-    description: PropTypes.string,
-    language: PropTypes.string,
-    created_at: PropTypes.string,
-    _id: PropTypes.string,
-  }).isRequired,
+CreateProjectItemComponent.propTypes = {
+  data: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
-export default CreateProjectItemComponen;
+function mapStateToProps({ projectsReducer }) {
+  return {
+    data: projectsReducer.data,
+  };
+}
+
+export default connect(mapStateToProps)(CreateProjectItemComponent);
