@@ -5,11 +5,7 @@ import actionTypes from './actionsTypes';
 
 const apiURL = 'http://localhost:5000/';
 const projectsEndpoint = 'projects';
-const userURL = 'https://api.github.com/user';
-
-const client_id = '3078e39c6f2add73219e';
-const client_secret = '90773844b97fb5ff0130133f9c540adc14f52c47';
-const accessURL = `https://github.com/login/oauth/access_token/?client_id=${client_id}&client_secret=${client_secret}&code=`;
+const userEndpoint = 'user';
 
 export function handleError(error) {
   return {
@@ -43,6 +39,13 @@ export function deleteProjectSuccess(deletedProject) {
   return {
     type: actionTypes.DELETE_PROJECT,
     deletedProject,
+  };
+}
+
+export function userLoginSuccess(login) {
+  return {
+    type: actionTypes.USER_INFO,
+    login,
   };
 }
 
@@ -97,17 +100,11 @@ export function getProjectDetail(_id) {
   };
 }
 
-export function getUser(token) {
-  debugger;
+export function getUser(access_token) {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(userURL, {
-        headers: {
-          Accept: 'application/vnd.github.v3+json',
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      console.log(data.name);
+      const { data } = await axios.get(`${apiURL}${userEndpoint}`, { params: { access_token } });
+      dispatch(userLoginSuccess(data));
     } catch (error) {
       dispatch(handleError(error));
     }
@@ -116,18 +113,9 @@ export function getUser(token) {
 
 export function getToken(code) {
   return async (dispatch) => {
-    debugger;
     try {
-      const { data } = await axios.post(`${accessURL}${code}`, {
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-          'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
-        },
-      });
-      debugger;
-      const token = data.split('&')[0].replace('access_token=');
-      dispatch(getUser(token));
+      const { data } = await axios.post(`${apiURL}${userEndpoint}`, { code });
+      dispatch(getUser(data));
     } catch (error) {
       dispatch(handleError(error));
     }

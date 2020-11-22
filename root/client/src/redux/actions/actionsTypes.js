@@ -5,6 +5,7 @@ const actionTypes = {
   DELETE_PROJECT: 'DELETE_PROJECT',
   ERROR_HANDLER: 'ERROR_HANDLER',
   GET_PROJECT_DETAIL: 'GET_PROJECT_DETAIL',
+  USER_INFO: 'USER_INFO',
 };
 
 export default actionTypes;
