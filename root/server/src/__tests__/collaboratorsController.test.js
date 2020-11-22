@@ -1,6 +1,6 @@
 const Projects = require('../models/projectsModel');
 const Collaborators = require('../models/collaboratorsModel');
-const collaboratorsController = require('./collaboratorsController')(Collaborators);
+const collaboratorsController = require('../controllers/collaboratorsController')(Collaborators);
 
 jest.mock('../models/collaboratorsModel');
 jest.mock('../models/projectsModel');
@@ -34,24 +34,24 @@ describe('collaboratorsController', () => {
     expect(res.send).toHaveBeenCalled();
   });
 
-  test('Post method - Collaborators - should have been called', () => {
-    const req = { body: { project: { _id: '1', collaborators: 'Skylab' }, addCollaborator: { name: 'Coders' } } };
-    Projects.create = jest.fn();
-    Collaborators.create = jest.fn();
+  test('Post method - Collaborators - should have been called', async () => {
+    const req = { body: { project: { _id: '1', collaborators: { name: 'Skylab', login: 'Code' }, addCollaborator: { name: 'Coders' } } } };
+    Collaborators.create = await jest.fn().mockReturnValue({ _id: '1' });
+    Projects.findOneAndUpdate = await jest.fn().mockReturnValue([{}]);
 
     collaboratorsController.postMethod(req);
 
-    expect(Collaborators.create).toHaveBeenCalled();
+    expect(Projects.findOneAndUpdate).toHaveBeenCalled();
   });
 
-  test('Post method - Collaborators - should have been called', () => {
+  test('should call error on post method', () => {
     const req = { body: { project: { _id: '1', collaborators: 'Skylab' }, addCollaborator: { name: 'Coders' } } };
     Collaborators.create = jest.fn();
-    Projects.create = jest.fn().mockImplementationOnce({});
+    Projects.findOneAndUpdate = jest.fn();
 
     collaboratorsController.postMethod(req);
 
-    expect(Collaborators.create).toHaveBeenCalled();
+    expect(Projects.findOneAndUpdate).toHaveBeenCalled();
   });
 
   test('should call response json on putMethod', () => {
