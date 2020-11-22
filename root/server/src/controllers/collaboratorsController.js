@@ -1,4 +1,6 @@
 /* eslint-disable no-underscore-dangle */
+const Projects = require('../models/projectsModel');
+
 function collaboratorsController(Collaborators) {
   function getMethod(req, res) {
     Collaborators.find({}, (errorFindList, collaboratorsList) => (errorFindList
@@ -6,13 +8,16 @@ function collaboratorsController(Collaborators) {
       : res.json(collaboratorsList)));
   }
 
-  function postMethod(req, res) {
-    const { project: { collaborators }, addCollaborator } = req.body;
-    console.log(collaborators);
-    Collaborators.create(addCollaborator,
-      (errorAddNewCollaborator, newCollaborators) => (errorAddNewCollaborator
-        ? res.send(errorAddNewCollaborator)
-        : collaborators.push(newCollaborators) && res.json(newCollaborators)));
+  async function postMethod(req, res) {
+    const { project: { _id, collaborators }, addCollaborator } = req.body;
+    try {
+      const newCollaborator = await Collaborators.create(addCollaborator);
+      const projectUpdateResponse = await Projects.findOneAndUpdate(_id,
+        { collaborators: [newCollaborator._id, ...collaborators] }, { new: true });
+      res.json(projectUpdateResponse);
+    } catch (error) {
+      res.send(error);
+    }
   }
 
   function putMethod(req, res) {

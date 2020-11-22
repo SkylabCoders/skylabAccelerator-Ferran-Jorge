@@ -11,7 +11,6 @@ function projectsController(Projects) {
 
   async function postMethod(req, res) {
     const { project: { collaborators, ...projectInfo } } = req.body;
-    console.log(req.body);
     try {
       const collaboratorsResponse = await Collaborators.create(collaborators);
       const projectsResponse = await Projects.create(
