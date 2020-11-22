@@ -28,7 +28,6 @@ function projectsController(Projects) {
 
   function putMethod(req, res) {
     const { project: { _id }, project } = req.body;
-    console.log(req.body);
     Projects.findOneAndUpdate(_id, project, { upsert: true, new: true },
       (errorUpdateProject, projectsList) => (errorUpdateProject
         ? res.send(errorUpdateProject)
@@ -37,10 +36,10 @@ function projectsController(Projects) {
 
   function deleteMethod(req, res) {
     const { project } = req.body;
-    console.log(project);
-    Projects.findOneAndRemove(project, (errorDeleteProject) => (errorDeleteProject
-      ? res.send(errorDeleteProject)
-      : res.json('Deleted Successfully!')));
+    Projects.findOneAndRemove(project,
+      (errorDeleteProject, projectDeleted) => (errorDeleteProject
+        ? res.send(errorDeleteProject)
+        : res.json(projectDeleted._id)));
   }
   return {
     getMethod, postMethod, putMethod, deleteMethod,
