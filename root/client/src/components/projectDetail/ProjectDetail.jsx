@@ -65,7 +65,7 @@ function ProjectDetail({ projectDetail, dispatch }) {
             <button
               type="button"
               onClick={() => {
-                dispatch(deleteProject(projectDetail));
+                dispatch(deleteProject({ project: projectDetail }));
               }}
             >
               Eliminar proyecto

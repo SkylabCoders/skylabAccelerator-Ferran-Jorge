@@ -6,6 +6,7 @@ describe('proyectsReducer', () => {
   beforeEach(() => {
     initialState = {
       projectList: [],
+      projectDetail: {},
       createdProject: [],
       updatedProject: [],
       deletedProject: [],
