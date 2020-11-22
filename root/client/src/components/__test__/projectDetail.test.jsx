@@ -1,21 +1,21 @@
-// import React from 'react';
-// import { render } from '@testing-library/react';
-// import configureStore from 'redux-mock-store';
-// import thunk from 'redux-thunk';
-// import { Provider } from 'react-redux';
-// import projectList from '../projectsList/ProjectListComponent';
+import React from 'react';
+import { render } from '@testing-library/react';
+import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+import { Provider } from 'react-redux';
+import projectList from '../projectsList/ProjectListComponent';
 
-// jest.mock('../redux/projectsActions');
+jest.mock('../../redux/actions/projectsActions');
 
-// const initialState = {
-//   projectList: [{}],
-//   createdProject: [],
-//   updatedProject: [],
-//   deletedProject: [],
-//   projectDetail: {},
-//   error: [],
-// };
-// const buildStore = configureStore([thunk]);
+const initialState = {
+  projectList: [{}],
+  createdProject: [],
+  updatedProject: [],
+  deletedProject: [],
+  projectDetail: {},
+  error: [],
+};
+const buildStore = configureStore([thunk]);
 
 xdescribe('UserList', () => {
   let Wrapper;
