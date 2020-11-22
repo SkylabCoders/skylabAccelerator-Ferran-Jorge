@@ -27,9 +27,6 @@ function ProjectHeader({ login, dispatch }) {
 ProjectHeader.propTypes = {
   login: PropTypes.arrayOf,
   dispatch: PropTypes.func.isRequired,
-  actions: PropTypes.shape({
-    getToken: PropTypes.func.isRequired,
-  }).isRequired,
 };
 
 ProjectHeader.defaultProps = {

@@ -4,10 +4,10 @@ const initialState = {
   login: [],
   projectList: [],
   createdProject: {},
-  updatedProject: [],
+  updatedProject: {},
   deletedProject: '',
   projectDetail: {},
-  error: [],
+  error: {},
 };
 
 export default function projectsReducer(state = initialState, action) {
@@ -34,6 +34,7 @@ export default function projectsReducer(state = initialState, action) {
       };
       break;
     case actionTypes.UPDATE_PROJECT:
+      debugger;
       updateState = {
         ...state,
         projectList:
@@ -42,6 +43,7 @@ export default function projectsReducer(state = initialState, action) {
             ? { ...updatedProject }
             : project)),
       };
+      debugger;
       break;
     case actionTypes.USER_INFO:
       updateState = { ...state, login };
