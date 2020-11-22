@@ -1,12 +1,11 @@
-/* eslint-disable no-debugger */
 import actionTypes from '../actions/actionsTypes';
 
 const initialState = {
   login: [],
   projectList: [],
-  createdProject: [],
+  createdProject: {},
   updatedProject: [],
-  deletedProject: [],
+  deletedProject: '',
   projectDetail: {},
   error: [],
 };
@@ -28,16 +27,30 @@ export default function projectsReducer(state = initialState, action) {
       };
       break;
     case actionTypes.CREATE_PROJECT:
-      updateState = { ...state, createdProject };
+      updateState = {
+        ...state,
+        projectList: state.projectList.push({ ...createdProject }),
+      };
       break;
     case actionTypes.UPDATE_PROJECT:
-      updateState = { ...state, updatedProject };
+      updateState = {
+        ...state,
+        projectList:
+        state.projectList.map((project) => (
+          project._id === updatedProject._id
+            ? { ...updatedProject }
+            : project)),
+      };
       break;
     case actionTypes.USER_INFO:
       updateState = { ...state, login };
       break;
     case actionTypes.DELETE_PROJECT:
-      updateState = { ...state, deletedProject };
+      updateState = {
+        ...state,
+        projectList:
+        state.projectList.filter((project) => project._id !== deletedProject),
+      };
       break;
     case actionTypes.ERROR_HANDLER:
       updateState = { ...state, error };

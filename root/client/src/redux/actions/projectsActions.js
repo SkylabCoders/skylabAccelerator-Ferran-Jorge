@@ -71,11 +71,11 @@ export function createProject(projectInfo) {
   };
 }
 
-export function updateProject(projectToUpdate) {
+export function updateProject(updatedProject) {
   return async (dispatch) => {
     try {
-      const demo = await axios.put(`${apiURL}${projectsEndpoint}`, { projectToUpdate });
-      dispatch(updateProjectSuccess(demo));
+      const { data } = await axios.put(`${apiURL}${projectsEndpoint}`, { ...updatedProject });
+      dispatch(updateProjectSuccess(data));
     } catch (error) {
       dispatch(handleError(error));
     }
@@ -85,8 +85,8 @@ export function updateProject(projectToUpdate) {
 export function deleteProject(projectToDelete) {
   return async (dispatch) => {
     try {
-      const { data } = await axios.delete(`${apiURL}${projectsEndpoint}`);
-      dispatch(deleteProjectSuccess(data), { ...projectToDelete });
+      const { data } = await axios.delete(`${apiURL}${projectsEndpoint}`, { projectToDelete });
+      dispatch(deleteProjectSuccess(data));
     } catch (error) {
       dispatch(handleError(error));
     }

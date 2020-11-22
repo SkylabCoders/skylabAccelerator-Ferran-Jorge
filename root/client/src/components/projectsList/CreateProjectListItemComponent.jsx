@@ -1,4 +1,3 @@
-/* eslint-disable no-debugger */
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -8,7 +7,7 @@ CreateProjectItemComponen({ data }) {
   return (
     <Link to={`/detail/${data._id}`}>
       <section>
-        <h2>Nombre del Projecto</h2>
+        <h2>{data.name}</h2>
         <div>
           <p>{data.description}</p>
           <ul>
@@ -24,6 +23,7 @@ CreateProjectItemComponen({ data }) {
 
 CreateProjectItemComponen.propTypes = {
   data: PropTypes.shape({
+    name: PropTypes.string,
     description: PropTypes.string,
     language: PropTypes.string,
     created_at: PropTypes.string,
