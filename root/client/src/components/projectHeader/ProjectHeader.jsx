@@ -5,14 +5,13 @@ import { Link } from 'react-router-dom';
 import { getToken } from '../../redux/actions/projectsActions';
 
 function ProjectHeader({ login, dispatch }) {
-  debugger;
   if (window.location.search && login.length === 0) {
     const code = (window.location.search?.replace('?code=', ''));
     dispatch(getToken(code));
   }
   return (
     <>
-      <header>
+      <header className="header-container">
         <nav>
           <button type="button"><Link to="/">Home</Link></button>
           <button type="button"><Link to="/list">Proyetos</Link></button>
@@ -25,15 +24,8 @@ function ProjectHeader({ login, dispatch }) {
 }
 
 ProjectHeader.propTypes = {
-  login: PropTypes.arrayOf,
+  login: PropTypes.arrayOf(PropTypes.object).isRequired,
   dispatch: PropTypes.func.isRequired,
-  actions: PropTypes.shape({
-    getToken: PropTypes.func.isRequired,
-  }).isRequired,
-};
-
-ProjectHeader.defaultProps = {
-  login: [],
 };
 
 function mapStateToProps({ projectsReducer }) {
