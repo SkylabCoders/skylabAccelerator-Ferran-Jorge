@@ -1,7 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
+import { getToken } from '../../redux/actions/projectsActions';
 
-function ProjectHeader() {
+function ProjectHeader({ login, dispatch }) {
+  debugger;
+  if (window.location.search && login.length === 0) {
+    const code = (window.location.search?.replace('?code=', ''));
+    dispatch(getToken(code));
+  }
   return (
     <>
       <header>
@@ -9,11 +17,25 @@ function ProjectHeader() {
           <button type="button"><Link to="/">Home</Link></button>
           <button type="button"><Link to="/list">Proyetos</Link></button>
           <button type="button"><Link to="/form">form</Link></button>
-          <button type="button">Login</button>
+          {login.length === 0 ? <a href="https://github.com/login/oauth/authorize?client_id=3078e39c6f2add73219e"><button type="button">Login</button></a> : <p>Hola!</p>}
         </nav>
       </header>
     </>
   );
 }
 
-export default ProjectHeader;
+ProjectHeader.propTypes = {
+  login: PropTypes.shape([]).isRequired,
+  dispatch: PropTypes.func.isRequired,
+  actions: PropTypes.shape({
+    getToken: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+function mapStateToProps({ projectsReducer }) {
+  return {
+    login: projectsReducer.login,
+  };
+}
+
+export default connect(mapStateToProps)(ProjectHeader);

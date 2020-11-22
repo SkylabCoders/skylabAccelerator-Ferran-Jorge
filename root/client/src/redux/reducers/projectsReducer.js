@@ -1,6 +1,7 @@
 import actionTypes from '../actions/actionsTypes';
 
 const initialState = {
+  login: [],
   projectList: [],
   createdProject: {},
   updatedProject: [],
