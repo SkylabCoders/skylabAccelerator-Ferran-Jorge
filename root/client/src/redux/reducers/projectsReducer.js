@@ -25,10 +25,10 @@ export default function projectsReducer(state = initialState, action) {
         projectDetail:
         state.projectList.find((project) => project._id === _id),
       };
-      debugger;
       break;
     case actionTypes.CREATE_PROJECT:
       updateState = { ...state, createdProject };
+      debugger;
       break;
     case actionTypes.UPDATE_PROJECT:
       updateState = { ...state, updatedProject };

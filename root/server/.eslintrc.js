@@ -12,10 +12,9 @@ module.exports = {
     ecmaVersion: 12,
   },
   rules: {
-    'no-debugger': 0,
-    'no-console': 0,
     'linebreak-style': 0,
     'global-require': 0,
     'eslint linebreak-style': [0, 'error', 'windows'],
+    'no-underscore-dangle': 0,
   },
 };

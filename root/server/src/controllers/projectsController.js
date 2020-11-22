@@ -1,5 +1,5 @@
 const Collaborators = require('../models/collaboratorsModel');
-/* eslint-disable no-underscore-dangle */
+
 function projectsController(Projects) {
   function getMethod(req, res) {
     Projects.find({})
@@ -11,7 +11,7 @@ function projectsController(Projects) {
 
   async function postMethod(req, res) {
     const { project: { collaborators, ...projectInfo } } = req.body;
-
+    console.log(req.body);
     try {
       const collaboratorsResponse = await Collaborators.create(collaborators);
       const projectsResponse = await Projects.create(
@@ -28,7 +28,9 @@ function projectsController(Projects) {
   }
 
   function putMethod(req, res) {
-    const { project: { _id }, project } = req.body;
+    const { _id, project } = req.body;
+    console.log(req.body);
+    console.log(_id);
     Projects.findOneAndUpdate(_id, project, { upsert: true, new: true },
       (errorUpdateProject, projectsList) => (errorUpdateProject
         ? res.send(errorUpdateProject)

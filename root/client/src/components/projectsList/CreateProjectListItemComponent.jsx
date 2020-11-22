@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 
 function
 CreateProjectItemComponen({ data }) {
-  debugger;
   return (
     <Link to={`/detail/${data._id}`}>
       <section>

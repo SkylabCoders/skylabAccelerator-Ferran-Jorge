@@ -3,6 +3,7 @@ import axios from 'axios';
 import actionTypes from './actionsTypes';
 
 const apiURL = 'http://localhost:5000/';
+const projectsEndpoint = 'projects';
 
 export function handleError(error) {
   return {
@@ -40,11 +41,9 @@ export function deleteProjectSuccess(deletedProject) {
 }
 
 export function loadProjectList() {
-  debugger;
-  const projectListEndpoint = 'projects';
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`${apiURL}${projectListEndpoint}`);
+      const { data } = await axios.get(`${apiURL}${projectsEndpoint}`);
       dispatch(loadProjectListSuccess(data));
     } catch (error) {
       dispatch(handleError(error));
@@ -55,8 +54,10 @@ export function loadProjectList() {
 export function createProject(projectInfo) {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post(apiURL, { ...projectInfo });
+      debugger;
+      const { data } = await axios.post(`${apiURL}${projectsEndpoint}`, { ...projectInfo });
       dispatch(createProjectSuccess(data));
+      debugger;
     } catch (error) {
       dispatch(handleError(error));
     }
@@ -66,8 +67,8 @@ export function createProject(projectInfo) {
 export function updateProject(projectToUpdate) {
   return async (dispatch) => {
     try {
-      const { data } = await axios.put(apiURL);
-      dispatch(updateProjectSuccess(data), { ...projectToUpdate });
+      const { data } = await axios.put(`${apiURL}${projectsEndpoint}`, { ...projectToUpdate });
+      dispatch(updateProjectSuccess(data));
     } catch (error) {
       dispatch(handleError(error));
     }
@@ -75,10 +76,12 @@ export function updateProject(projectToUpdate) {
 }
 
 export function deleteProject(projectToDelete) {
+  debugger;
   return async (dispatch) => {
     try {
-      const { data } = await axios.delete(apiURL);
+      const { data } = await axios.delete(`${apiURL}${projectsEndpoint}`);
       dispatch(deleteProjectSuccess(data), { ...projectToDelete });
+      debugger;
     } catch (error) {
       dispatch(handleError(error));
     }
@@ -86,7 +89,6 @@ export function deleteProject(projectToDelete) {
 }
 
 export function getProjectDetail(_id) {
-  debugger;
   return {
     type: actionTypes.GET_PROJECT_DETAIL,
     _id,

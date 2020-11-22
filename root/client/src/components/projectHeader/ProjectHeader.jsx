@@ -8,7 +8,7 @@ function ProjectHeader() {
         <nav>
           <button type="button"><Link to="/">Home</Link></button>
           <button type="button"><Link to="/list">Proyetos</Link></button>
-          <button type="button"><Link to="/detail">Home</Link></button>
+          <button type="button"><Link to="/form">form</Link></button>
           <button type="button">Login</button>
         </nav>
       </header>
