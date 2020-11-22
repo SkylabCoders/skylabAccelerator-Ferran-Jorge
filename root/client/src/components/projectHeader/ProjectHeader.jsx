@@ -17,7 +17,7 @@ function ProjectHeader({ login, dispatch }) {
           <button type="button"><Link to="/">Home</Link></button>
           <button type="button"><Link to="/list">Proyetos</Link></button>
           <button type="button"><Link to="/form">form</Link></button>
-          {login.length === 0 ? <a href="https://github.com/login/oauth/authorize?client_id=3078e39c6f2add73219e"><button type="button">Login</button></a> : <p>Hola!</p>}
+          {login.length === 0 ? <a href="https://github.com/login/oauth/authorize?client_id=3078e39c6f2add73219e"><button type="button">Login</button></a> : <p>{login?.login}</p>}
         </nav>
       </header>
     </>
