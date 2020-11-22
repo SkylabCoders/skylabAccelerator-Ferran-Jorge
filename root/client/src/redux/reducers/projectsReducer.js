@@ -13,7 +13,7 @@ const initialState = {
 
 export default function projectsReducer(state = initialState, action) {
   const {
-    type, error, projectList, createdProject, updatedProject, deletedProject, _id,
+    type, error, projectList, createdProject, updatedProject, login, deletedProject, _id,
   } = action;
   let updateState;
   switch (type) {
@@ -32,6 +32,9 @@ export default function projectsReducer(state = initialState, action) {
       break;
     case actionTypes.UPDATE_PROJECT:
       updateState = { ...state, updatedProject };
+      break;
+    case actionTypes.USER_INFO:
+      updateState = { ...state, login };
       break;
     case actionTypes.DELETE_PROJECT:
       updateState = { ...state, deletedProject };

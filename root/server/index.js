@@ -9,6 +9,7 @@ const Projects = require('./src/models/projectsModel');
 const Collaborators = require('./src/models/collaboratorsModel');
 const projectsRouter = require('./src/routes/projectsRouter')(Projects);
 const collaboratorsRouter = require('./src/routes/collaboratorsRouter')(Collaborators);
+const userRouter = require('./src/routes/userRouter')();
 
 const app = express();
 app.use(cors());
@@ -22,6 +23,7 @@ connect(dataBaseURL, { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.use('/projects', projectsRouter);
 app.use('/collaborators', collaboratorsRouter);
+app.use('/user', userRouter);
 
 app.listen(port, () => (
   debug(`Server is running on port ${chalk.blue(port)}`)));
