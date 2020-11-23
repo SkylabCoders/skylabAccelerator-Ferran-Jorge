@@ -32,7 +32,7 @@ function CreateProjectForm({ projectDetail, dispatch }) {
   }, []);
 
   return (
-    <>
+    <div className="form-container">
       <form>
         <label htmlFor="name">
           Nombre Proyecto
@@ -100,19 +100,12 @@ function CreateProjectForm({ projectDetail, dispatch }) {
       >
         Guardar Cambios
       </button>
-    </>
+    </div>
   );
 }
 
 CreateProjectForm.propTypes = {
-  projectDetail: PropTypes.shape({
-    name: PropTypes.string,
-    owner: PropTypes.string,
-    description: PropTypes.string,
-    language: PropTypes.string,
-    created_at: PropTypes.string,
-    collaborators: PropTypes.arrayOf(String),
-  }).isRequired,
+  projectDetail: PropTypes.objectOf(PropTypes.Object).isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 

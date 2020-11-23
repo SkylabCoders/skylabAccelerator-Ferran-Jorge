@@ -53,7 +53,7 @@ describe('proyectsReducer', () => {
     });
   });
 
-  xtest('should return new state from UPDATE_PROJECT', () => {
+  test('should return new state from UPDATE_PROJECT', () => {
     const myInitialState = {
       login: [],
       projectList: [{ _id: '5fba79c2c025b360d0181fe8', name: 'Test Project Update', description: 'String' }],
@@ -76,7 +76,7 @@ describe('proyectsReducer', () => {
     });
   });
 
-  xtest('should return new state from DELETE_PROJECT', () => {
+  test('should return new state from DELETE_PROJECT', () => {
     expect(
       projectsReducer(undefined, {
         type: actionTypes.DELETE_PROJECT,
