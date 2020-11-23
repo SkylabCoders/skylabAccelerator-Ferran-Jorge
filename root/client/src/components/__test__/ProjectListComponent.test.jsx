@@ -19,7 +19,7 @@ describe('ProjectListComponent', () => {
     container = null;
   });
 
-  test('should be defined - ProjectList === null', () => {
+  test('should be defined - ProjectList === null ', () => {
     const projectList = null;
     const store = configureStore({
       projectsReducer: { projectList },

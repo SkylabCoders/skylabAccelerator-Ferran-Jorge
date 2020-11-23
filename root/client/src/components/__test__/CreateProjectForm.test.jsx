@@ -4,9 +4,9 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import configureStore from '../../redux/configureStore';
-import CreateProjectListItemComponent from '../projectsList/CreateProjectListItemComponent';
+import CreateProjectForm from '../projectForm/CreateProjectForm';
 
-describe('CreateProjectListItemComponent', () => {
+describe('CreateProjectForm', () => {
   let container;
   beforeEach(() => {
     container = document.createElement('div');
@@ -19,12 +19,12 @@ describe('CreateProjectListItemComponent', () => {
     container = null;
   });
 
-  test('should be defined - login length ', () => {
-    const data = {
+  test('should be defined - projectDetail === null ', () => {
+    const projectDetail = {
       _id: 'Skylab', owner: 'Skylab', name: 'Skylab', description: 'Mola molt!', created_at: 'Skylab', language: 'Javascript',
     };
     const store = configureStore({
-      projectsReducer: { data },
+      projectsReducer: { projectDetail },
     });
     store.dispatch = jest.fn();
 
@@ -32,13 +32,13 @@ describe('CreateProjectListItemComponent', () => {
       render(
         <ReduxProvider store={store}>
           <BrowserRouter>
-            <CreateProjectListItemComponent />
+            <CreateProjectForm />
           </BrowserRouter>
         </ReduxProvider>,
         container,
       );
     });
 
-    expect(document.getElementsByClassName('project-article')[0]).toBeDefined();
+    expect(document.getElementsByClassName('form-container')[0]).toBeDefined();
   });
 });
