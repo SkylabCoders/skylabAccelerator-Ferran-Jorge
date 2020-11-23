@@ -191,7 +191,7 @@ describe('Project Actions', () => {
       }]);
     });
 
-    xtest('should call to getToken and return token', async () => {
+    test('should call to getToken and return token', async () => {
       const code = 'SDF5H1WT465de4hg9w3qeasdf465AER4G';
       const response = {
         data: {
@@ -205,17 +205,17 @@ describe('Project Actions', () => {
       expect(store.dispatch(getUser(response.data.accessToken))).toHaveBeenCalled();
     });
 
-    xtest('should call to getToken and return error', async () => {
-      const code = 'SDF5H1WT465de4hg9w3qeasdf465AER4G';
-      const error = 'There was an error';
+    // xtest('should call to getToken and return error', async () => {
+    //   const code = 'SDF5H1WT465de4hg9w3qeasdf465AER4G';
+    //   const error = 'There was an error';
 
-      axios.post = jest.fn().mockImplementationOnce(() => Promise.reject(error));
-      await store.dispatch(getToken(code));
+    //   axios.post = jest.fn().mockImplementationOnce(() => Promise.reject(error));
+    //   await store.dispatch(getToken(code));
 
-      expect(store.getActions()).toEqual([{
-        type: actionTypes.ERROR_HANDLER,
-        error,
-      }]);
-    });
+    //   expect(store.getActions()).toEqual([{
+    //     type: actionTypes.ERROR_HANDLER,
+    //     error,
+    //   }]);
+    // });
   });
 });

@@ -36,7 +36,8 @@ function projectsController(Projects) {
 
   function deleteMethod(req, res) {
     const { _id } = req.body;
-    Projects.findOneAndRemove(_id,
+    console.log(_id);
+    Projects.findOneAndRemove({ _id },
       (errorDeleteProject, projectDeleted) => (errorDeleteProject
         ? res.send(errorDeleteProject)
         : res.json(projectDeleted._id)));

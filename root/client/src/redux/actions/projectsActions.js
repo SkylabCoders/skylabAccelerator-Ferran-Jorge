@@ -1,5 +1,4 @@
 /* eslint-disable camelcase */
-/* eslint-disable no-debugger */
 import axios from 'axios';
 import actionTypes from './actionsTypes';
 
@@ -52,7 +51,9 @@ export function userLoginSuccess(login) {
 export function loadProjectList() {
   return async (dispatch) => {
     try {
+      debugger;
       const { data } = await axios.get(`${apiURL}${projectsEndpoint}`);
+      debugger;
       dispatch(loadProjectListSuccess(data));
     } catch (error) {
       dispatch(handleError(error));
@@ -85,7 +86,8 @@ export function updateProject(updatedProject) {
 export function deleteProject(projectToDelete) {
   return async (dispatch) => {
     try {
-      const { data } = await axios.delete(`${apiURL}${projectsEndpoint}`, { projectToDelete });
+      debugger;
+      const { data } = await axios.delete(`${apiURL}${projectsEndpoint}`, { data: { _id: projectToDelete } });
       dispatch(deleteProjectSuccess(data));
     } catch (error) {
       dispatch(handleError(error));

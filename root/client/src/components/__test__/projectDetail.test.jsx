@@ -1,34 +1,51 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import { render } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { Provider } from 'react-redux';
-import ProjectDetailComponent from '../projectDetail/ProjectDetail';
+// import { getProjectDetail, deleteProject } from '../../redux/actions/projectsActions';
+import ProjectDetail from '../projectDetail/ProjectDetail';
+import ProjectList from '../projectsList/ProjectListComponent';
 
 jest.mock('../../redux/actions/projectsActions');
 
-const initialState = {
-  login: [],
-  projectList: [],
-  createdProject: {},
-  updatedProject: [],
-  deletedProject: '',
-  projectDetail: {},
-  error: [],
-};
-const testStore = configureStore([thunk]);
+const storeMock = configureStore([thunk]);
 
-xdescribe('UserList', () => {
-  let Wrapper;
-  beforeEach(() => {
-    const store = testStore(initialState);
+describe('Detail', () => {
+  let wrapper;
+
+  const wrapperFactory = (wrapperInitialState) => {
+    const store = storeMock(wrapperInitialState);
     store.dispatch = jest.fn();
 
-    Wrapper = ({ children }) => <Provider store={store}>{children}</Provider>;
-    render(<ProjectDetailComponent />, { wrapper: Wrapper });
+    return ({ children }) => {
+      <Provider store={store}>
+        <BrowserRouter>
+          {children}
+        </BrowserRouter>
+      </Provider>;
+    };
+  };
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+    wrapper = null;
   });
 
-  test('should render', () => {
-    expect(document.querySelector('.detail-container')).toBeInTheDocument();
+  test('should render atleast hola', () => {
+    const initialState = {};
+    wrapper = wrapperFactory(initialState);
+    Object.defineProperty(window, 'location', {
+      value: {
+        pathname: '/loquesea',
+      },
+    });
+
+    render(<ProjectList />, { wrapper });
+
+    expect(document.querySelector('.pruebas').textContent).toBe('hola');
+    // expect(useParams).toHaveBeenCalled();
   });
 });

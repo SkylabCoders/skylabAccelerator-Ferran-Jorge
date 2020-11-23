@@ -29,6 +29,7 @@ function ProjectDetail({ projectDetail, dispatch }) {
 
   return (
     <>
+      <div className="pruebas">hola</div>
       <section className="detail-container">
         {!_.isEmpty(projectInfo) && projectDetail._id === id && (
           <>

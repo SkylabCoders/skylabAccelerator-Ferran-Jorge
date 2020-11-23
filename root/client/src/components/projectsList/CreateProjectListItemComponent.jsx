@@ -1,11 +1,11 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
 import './listStyles/listStyles.css';
 
 function
 CreateProjectItemComponent({ data }) {
+  debugger;
   return (
     <section className="project-article">
       <header className="article-header">
@@ -36,10 +36,4 @@ CreateProjectItemComponent.propTypes = {
   data: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
-function mapStateToProps({ projectsReducer }) {
-  return {
-    data: projectsReducer.data,
-  };
-}
-
-export default connect(mapStateToProps)(CreateProjectItemComponent);
+export default CreateProjectItemComponent;

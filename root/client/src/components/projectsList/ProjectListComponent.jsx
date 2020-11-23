@@ -7,6 +7,7 @@ import { loadProjectList } from '../../redux/actions/projectsActions';
 import CreateProjectItemComponent from './CreateProjectListItemComponent';
 
 function ProjectListComponent({ projectList, dispatch }) {
+  debugger;
   useEffect(() => {
     if (!projectList || projectList.length === 0) {
       dispatch(loadProjectList());
@@ -32,6 +33,7 @@ ProjectListComponent.propTypes = {
 };
 
 function mapStateToProps({ projectsReducer }) {
+  debugger;
   return {
     projectList: projectsReducer.projectList,
   };

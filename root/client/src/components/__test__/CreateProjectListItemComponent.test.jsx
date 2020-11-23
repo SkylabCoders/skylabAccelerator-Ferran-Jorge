@@ -21,7 +21,12 @@ describe('CreateProjectListItemComponent', () => {
 
   test('should be defined - login length', () => {
     const data = {
-      _id: 'Skylab', owner: 'Skylab', name: 'Skylab', description: 'Mola molt!', created_at: 'Skylab', language: 'Javascript',
+      _id: 'Skylab',
+      owner: 'Skylab',
+      name: 'Skylab',
+      description: 'Mola molt!',
+      created_at: 'Skylab',
+      language: 'Javascript',
     };
     const store = configureStore({
       projectsReducer: { data },

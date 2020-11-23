@@ -11,30 +11,31 @@ const initialState = {
 };
 
 export default function projectsReducer(state = initialState, action) {
-  debugger;
   const {
     type, error, projectList, createdProject, updatedProject, login, deletedProject, _id,
   } = action;
   let updateState;
   switch (type) {
     case actionTypes.LOAD_PROJECTS_LIST:
+      debugger;
       updateState = { ...state, projectList };
       break;
     case actionTypes.GET_PROJECT_DETAIL:
       updateState = {
         ...state,
         projectDetail:
-        state.projectList.find((project) => project._id === _id),
+        { ...state.projectList.find((project) => project._id === _id) },
       };
       break;
     case actionTypes.CREATE_PROJECT:
+      debugger;
       updateState = {
         ...state,
-        ...state.projectList.push({ ...createdProject }),
+        ...state.projectList.unshift({ ...createdProject }),
       };
+      debugger;
       break;
     case actionTypes.UPDATE_PROJECT:
-      debugger;
       updateState = {
         ...state,
         projectList:
@@ -43,7 +44,6 @@ export default function projectsReducer(state = initialState, action) {
             ? { ...updatedProject }
             : project)),
       };
-      debugger;
       break;
     case actionTypes.USER_INFO:
       updateState = { ...state, login };
@@ -51,8 +51,7 @@ export default function projectsReducer(state = initialState, action) {
     case actionTypes.DELETE_PROJECT:
       updateState = {
         ...state,
-        projectList:
-        state.projectList.filter((project) => project._id !== deletedProject),
+        projectList: [...state.projectList.filter((project) => project._id !== deletedProject)],
       };
       break;
     case actionTypes.ERROR_HANDLER:
