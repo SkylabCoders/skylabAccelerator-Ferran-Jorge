@@ -2,8 +2,8 @@ const Projects = require('../models/projectsModel');
 const Collaborators = require('../models/collaboratorsModel');
 const collaboratorsController = require('../controllers/collaboratorsController')(Collaborators);
 
-jest.mock('../models/collaboratorsModel');
 jest.mock('../models/projectsModel');
+jest.mock('../models/collaboratorsModel');
 
 describe('collaboratorsController', () => {
   test('should call response json on getMethod', () => {
@@ -35,13 +35,14 @@ describe('collaboratorsController', () => {
   });
 
   test('Post method - Collaborators - should have been called', async () => {
+    const res = { json: jest.fn(), send: jest.fn() };
     const req = { body: { project: { _id: '1', collaborators: { name: 'Skylab', login: 'Code' }, addCollaborator: { name: 'Coders' } } } };
-    Collaborators.create = await jest.fn().mockReturnValue({ _id: '1' });
-    Projects.findOneAndUpdate = await jest.fn().mockReturnValue([{}]);
+    Collaborators.create = jest.fn().mockResolvedValueOnce({ _id: '1' });
+    Projects.findOneAndUpdate = jest.fn().mockResolvedValueOnce([{}]);
 
-    collaboratorsController.postMethod(req);
+    await collaboratorsController.postMethod(req, res);
 
-    expect(Projects.findOneAndUpdate).toHaveBeenCalled();
+    expect(res.send).toHaveBeenCalled();
   });
 
   test('should call error on post method', () => {

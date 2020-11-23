@@ -19,7 +19,7 @@ describe('ProjectHeader', () => {
     container = null;
   });
 
-  test('should be defined - login length', () => {
+  test('should be defined - login length ', () => {
     const login = [{ name: 'skylab' }, { login: 'coders' }];
     const store = configureStore({
       projectsReducer: { login },
