@@ -169,7 +169,7 @@ describe('Project Actions', () => {
         data: {},
       };
 
-      axios.get = jest.fn().mockImplementationOnce(() => Promise.resolve(response));
+      axios.get.mockImplementationOnce(() => Promise.resolve(response));
       await store.dispatch(getUser(accessToken));
 
       expect(store.getActions()).toEqual([{
@@ -182,7 +182,7 @@ describe('Project Actions', () => {
       const accessToken = '193hufbn8123f9asjd1';
       const error = 'There was an error';
 
-      axios.get = jest.fn().mockImplementationOnce(() => Promise.reject(error));
+      axios.get.mockImplementationOnce(() => Promise.reject(error));
       await store.dispatch(getUser(accessToken));
 
       expect(store.getActions()).toEqual([{
@@ -191,31 +191,31 @@ describe('Project Actions', () => {
       }]);
     });
 
-    test('should call to getToken and return token', async () => {
+    test('should call to getToken and return token', () => {
       const code = 'SDF5H1WT465de4hg9w3qeasdf465AER4G';
       const response = {
         data: {
           accessToken: '193hufbn8123f9asjd1',
         },
       };
+      getUser = jest.fn();
+      axios.post.mockImplementationOnce(() => Promise.resolve(response));
+      store.dispatch(getUser());
 
-      axios.post = jest.fn().mockImplementationOnce(() => Promise.resolve(response));
-      await store.dispatch(getToken(code));
-
-      expect(store.dispatch(getUser(response.data.accessToken))).toHaveBeenCalled();
+      expect(store.dispatch(getUser)).toHaveBeenCalled();
     });
 
-    // xtest('should call to getToken and return error', async () => {
-    //   const code = 'SDF5H1WT465de4hg9w3qeasdf465AER4G';
-    //   const error = 'There was an error';
+    test('should call to getToken and return error', async () => {
+      const code = 'SDF5H1WT465de4hg9w3qeasdf465AER4G';
+      const error = 'There was an error';
 
-    //   axios.post = jest.fn().mockImplementationOnce(() => Promise.reject(error));
-    //   await store.dispatch(getToken(code));
+      axios.post = jest.fn().mockImplementationOnce(() => Promise.reject(error));
+      await store.dispatch(getToken(code));
 
-    //   expect(store.getActions()).toEqual([{
-    //     type: actionTypes.ERROR_HANDLER,
-    //     error,
-    //   }]);
-    // });
+      expect(store.getActions()).toEqual([{
+        type: actionTypes.ERROR_HANDLER,
+        error,
+      }]);
+    });
   });
 });
