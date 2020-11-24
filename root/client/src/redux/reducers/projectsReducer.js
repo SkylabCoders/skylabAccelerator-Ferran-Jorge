@@ -8,6 +8,7 @@ const initialState = {
   deletedProject: '',
   projectDetail: {},
   error: {},
+  _id: '',
 };
 
 export default function projectsReducer(state = initialState, action) {
