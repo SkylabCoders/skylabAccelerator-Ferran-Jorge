@@ -6,8 +6,27 @@ import { BrowserRouter } from 'react-router-dom';
 import configureStore from '../../redux/configureStore';
 import ProjectHeader from '../projectHeader/ProjectHeader';
 
+jest.mock('../../redux/actions/projectsActions');
+
 describe('ProjectHeader', () => {
   let container;
+
+  const wrapperFactory = (login) => {
+    const store = configureStore({ projectsReducer: { login } });
+    store.dispatch = jest.fn();
+
+    return act(() => {
+      render(
+        <ReduxProvider store={store}>
+          <BrowserRouter>
+            <ProjectHeader />
+          </BrowserRouter>
+        </ReduxProvider>,
+        container,
+      );
+    });
+  };
+
   beforeEach(() => {
     container = document.createElement('div');
     document.body.appendChild(container);
@@ -21,21 +40,7 @@ describe('ProjectHeader', () => {
 
   test('should be defined - login length ', () => {
     const login = [{ name: 'skylab' }, { login: 'coders' }];
-    const store = configureStore({
-      projectsReducer: { login },
-    });
-    store.dispatch = jest.fn();
-
-    act(() => {
-      render(
-        <ReduxProvider store={store}>
-          <BrowserRouter>
-            <ProjectHeader />
-          </BrowserRouter>
-        </ReduxProvider>,
-        container,
-      );
-    });
+    wrapperFactory(login);
 
     expect(document.getElementsByClassName('header-container')[0]).toBeDefined();
   });
@@ -48,21 +53,7 @@ describe('ProjectHeader', () => {
       },
     });
     const login = [];
-    const store = configureStore({
-      projectsReducer: { login },
-    });
-    store.dispatch = jest.fn();
-
-    act(() => {
-      render(
-        <ReduxProvider store={store}>
-          <BrowserRouter>
-            <ProjectHeader />
-          </BrowserRouter>
-        </ReduxProvider>,
-        container,
-      );
-    });
+    wrapperFactory(login);
 
     expect(document.getElementsByClassName('header-container')[0]).toBeDefined();
   });
